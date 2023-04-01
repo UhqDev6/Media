@@ -2,30 +2,30 @@ const api = (() => {
   const BASE_URL = 'https://idnapi.jvalleyserver.net/api';
 
   async function getNews() {
-    const response = await fetch(`${BASE_URL}/blog_read?limit=8`);
+    const response = await fetch(`${BASE_URL}/blog_read?limit=8`, {
+      method: 'GET',
+      header: {
+        'content-type': 'application/json',
+      },
+    });
     const responseJson = await response.json();
     return responseJson;
   }
 
-  function getCulture() {
-    fetch(
-      'positions.json',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+  async function getCareer() {
+    const response = await fetch(`${BASE_URL}/job_read?offset=0&limit=6`, {
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json',
       },
-    )
-      .then((response) => response.json())
-      .then((myJson) => {
-        const data = myJson;
-        return data;
-      });
+    });
+    const responseJson = await response.json();
+    return responseJson;
   }
+
   return {
     getNews,
-    getCulture,
+    getCareer,
   };
 })();
 

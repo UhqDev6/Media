@@ -6,19 +6,43 @@ import Layout from '@/components/layout';
 import bgCareer from '@/assets/image/bg-news.jpg';
 import { getBenefit } from '@/utils/benefit';
 import { getEmployee } from '@/utils/employe';
+import ListCareer from '@/components/molecules/listcareers';
+import api from '@/utils/api';
 
 export default function Career(props) {
-  const [width, setWidth] = useState(0);
-  const carousel = useRef();
   const {
     employee,
+    jobs,
   } = props;
+
+  const [width, setWidth] = useState(0);
+  const [start, setStart] = useState(6);
+  const [careers, setCareers] = useState(jobs);
+  const carousel = useRef();
+
+  const loadMore = async () => {
+    const response = await fetch(`https://idnapi.jvalleyserver.net/api/job_read?offset=0&limit=${start}`, {
+      method: 'GET',
+      header: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const responseJson = await response.json();
+    const {
+      jobs,
+    } = responseJson;
+
+    setCareers(jobs);
+    setStart(start + 6);
+  };
+
   const benefits = getBenefit();
 
   useEffect(() => {
-    console.log(carousel.current.scrollWidth, carousel.current.offsetWidth);
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    loadMore();
   }, []);
+
   return (
     <Layout>
       <Head>
@@ -135,16 +159,41 @@ export default function Career(props) {
           </p>
         </div>
       </div>
+      <div className="md:w-[80%] mx-auto mt-10">
+        <div className="flex justify-center">
+          <h1 className="text-2xl md:text-4xl tracking-wide leading-relaxed font-bold flex justify-center">Current Openings</h1>
+        </div>
+        <div>
+          <ListCareer careers={careers} />
+        </div>
+      </div>
+      <div className="w-full flex justify-center mt-4">
+        <div className="w-1/2 md:w-1/5 underline decoration-[#B1B2FF] p-3">
+          <button
+            type="button"
+            className="text-[#B1B2FF] flex mx-auto text-base font-bold"
+            onClick={() => loadMore()}
+          >
+            Load more
+          </button>
+        </div>
+      </div>
     </Layout>
   );
 }
 
-export function getServerSideProps() {
+export async function getServerSideProps() {
+  const careers = await api.getCareer();
+  const {
+    jobs,
+  } = careers;
+
   const employee = getEmployee();
 
   return {
     props: {
       employee,
+      jobs,
     },
   };
 }

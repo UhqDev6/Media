@@ -26,7 +26,6 @@ export default function Blog({ rows: initialRows }) {
     const {
       query: { rows },
     } = responseJson;
-    // console.log(rows);
 
     setNews(rows);
     setStart(start + 5);
@@ -87,7 +86,7 @@ export default function Blog({ rows: initialRows }) {
             className="text-[#B1B2FF] flex mx-auto text-base font-bold"
             onClick={() => loadMore()}
           >
-            Load more...
+            Load more
           </button>
         </div>
       </div>

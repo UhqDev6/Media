@@ -8,12 +8,12 @@ export const navLink = [
     link: '/news',
   },
   {
-    name: 'Products',
-    link: '/products',
-  },
-  {
     name: 'Careers',
     link: '/careers',
+  },
+  {
+    name: 'Products',
+    link: '/products',
   },
   {
     name: 'About Us',

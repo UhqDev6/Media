@@ -32,6 +32,7 @@
       "default-param-last": "off",
       "react/destructuring-assignment": "off",
       "no-shadow": "off",
-      "import/no-absolute-path": "off"
+      "import/no-absolute-path": "off",
+      "react/jsx-boolean-value": "off"
     }
 }

@@ -7,7 +7,7 @@ import { configHost } from '@/constants/host';
 import Card from '../card';
 import CardSkeleton from '@/components/atoms/CardSkeleton';
 
-export default function ListNews(props) {
+export default function ListPressRelease(props) {
   const [isLoading, setIsLoading] = useState(true);
   const {
     data,

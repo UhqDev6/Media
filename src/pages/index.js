@@ -13,7 +13,7 @@ import { getCulture } from '@/utils/culture';
 
 export default function Home(props) {
   const {
-    rows,
+    dataNews,
     culture,
   } = props;
 
@@ -30,7 +30,7 @@ export default function Home(props) {
         <Thumbnail />
       </section>
       <section>
-        <OurNews data={rows} />
+        <OurNews data={dataNews} />
       </section>
       <section>
         <OurCareer />
@@ -46,22 +46,14 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const responseJson = await api.getNews();
-  const { status, message } = responseJson;
-
-  if (status !== true) {
-    console.log(message);
-  }
-
-  const {
-    query: { rows },
-  } = responseJson;
-
+  const dataNews = await api.getNews();
+  const dataPressRelease = await api.getPressRelease();
   const culture = getCulture();
 
   return {
     props: {
-      rows,
+      dataNews,
+      dataPressRelease,
       culture,
     },
   };

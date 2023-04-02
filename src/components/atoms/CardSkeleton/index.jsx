@@ -6,8 +6,7 @@ export default function CardSkeleton() {
     <Card className="grid md:w-[300px] w-full  h-auto shadow-lg mt-10 relative">
       <Card.Body>
         <Skeleton
-          height={150}
-          width={335}
+          className="h-[150px]"
         />
         <Card.Title>
           <div className="text-gray-500 tracking-wide leading-relaxed text-sm pt-4 pl-4 pr-4">

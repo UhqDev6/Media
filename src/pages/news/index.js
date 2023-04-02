@@ -9,13 +9,26 @@ import Layout from '@/components/layout';
 import bgNews from '@/assets/image/bg-news.jpg';
 import api from '@/utils/api';
 import ListNews from '@/components/molecules/listnews';
+import Button from '@/components/atoms/button';
+import ListPressRelease from '@/components/molecules/listpressrelease';
 
-export default function Blog({ rows: initialRows }) {
-  const [start, setStart] = useState(8);
-  const [news, setNews] = useState(initialRows);
+export default function Blog(props) {
+  const {
+    dataNews,
+    dataPressRelease,
+  } = props;
+  const [startNews, setStartNews] = useState(8);
+  const [news, setNews] = useState(dataNews);
+  const [startPressRelease, setStartPressRelease] = useState(8);
+  const [pressRelease, setPressRelease] = useState(dataPressRelease);
+  const [active, setActive] = useState(true);
 
-  async function loadMore() {
-    const response = await fetch(`https://idnapi.jvalleyserver.net/api/blog_read?limit=${start}`);
+  const handleAction = () => {
+    setActive(!active);
+  };
+
+  async function loadNewsData() {
+    const response = await fetch(`https://idnapi.jvalleyserver.net/api/blog_read?limit=${startNews}`);
     const responseJson = await response.json();
     const { status, message } = responseJson;
 
@@ -28,11 +41,29 @@ export default function Blog({ rows: initialRows }) {
     } = responseJson;
 
     setNews(rows);
-    setStart(start + 5);
+    setStartNews(startNews + 8);
+  }
+
+  async function loadPressReleaseData() {
+    const response = await fetch(`https://idnapi.jvalleyserver.net/api/pr_read?limit=${startPressRelease}`);
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== true) {
+      console.log(message);
+    }
+
+    const {
+      query: { rows },
+    } = responseJson;
+
+    setPressRelease(rows);
+    setStartPressRelease(startPressRelease + 8);
   }
 
   useEffect(() => {
-    loadMore();
+    loadNewsData();
+    loadPressReleaseData();
   }, []);
 
   // const dispatch = useDispatch();
@@ -76,20 +107,63 @@ export default function Blog({ rows: initialRows }) {
           </div>
         </div>
       </div>
-      <div className="">
-        <ListNews data={news} />
-      </div>
-      <div className="w-full flex justify-center mt-10">
-        <div className="w-1/2 md:w-1/5 underline decoration-[#B1B2FF] p-3">
-          <button
+      <div className="flex justify-center gap-6 mt-10">
+        <div>
+          <Button
             type="button"
-            className="text-[#B1B2FF] flex mx-auto text-base font-bold"
-            onClick={() => loadMore()}
+            onClick={() => handleAction()}
+            className={`${active === true ? 'bg-[#B1B2FF] p-2 rounded-lg' : 'p-2'}`}
           >
-            Load more
-          </button>
+            Blog
+          </Button>
+        </div>
+        <div>
+          <Button
+            type="button"
+            onClick={() => handleAction()}
+            className={`${active === false ? 'bg-[#B1B2FF] p-2 rounded-lg' : 'p-2'}`}
+          >
+            Press Release
+          </Button>
         </div>
       </div>
+      {
+        active ? (
+          <>
+            <div>
+              <ListNews data={news} />
+            </div>
+            <div className="w-full flex justify-center mt-10">
+              <div className="w-1/2 md:w-1/5 underline decoration-[#B1B2FF] p-3">
+                <button
+                  type="button"
+                  className="text-[#B1B2FF] flex mx-auto text-base font-bold"
+                  onClick={() => loadNewsData()}
+                >
+                  Load more
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <ListPressRelease data={pressRelease} />
+            </div>
+            <div className="w-full flex justify-center mt-10">
+              <div className="w-1/2 md:w-1/5 underline decoration-[#B1B2FF] p-3">
+                <button
+                  type="button"
+                  className="text-[#B1B2FF] flex mx-auto text-base font-bold"
+                  onClick={() => loadPressReleaseData()}
+                >
+                  Load more
+                </button>
+              </div>
+            </div>
+          </>
+        )
+      }
     </Layout>
   );
 }
@@ -102,20 +176,13 @@ export async function getServerSideProps() {
   //     dehydratedState: dehydrate(queryClient),
   //   },
   // };
-  const responseJson = await api.getNews();
-  const { status, message } = responseJson;
-
-  if (status !== true) {
-    console.log(message);
-  }
-
-  const {
-    query: { rows },
-  } = responseJson;
+  const dataNews = await api.getNews();
+  const dataPressRelease = await api.getPressRelease();
 
   return {
     props: {
-      rows,
+      dataNews,
+      dataPressRelease,
     },
   };
 }

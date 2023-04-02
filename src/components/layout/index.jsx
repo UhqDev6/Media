@@ -1,6 +1,5 @@
 // import Head from 'next/head';
 import PropTypes from 'prop-types';
-import Wrapper from '../atoms/wrapper';
 import Footer from '../molecules/footer';
 import Headers from '../molecules/header';
 
@@ -9,7 +8,7 @@ export default function Layout(props) {
     children,
   } = props;
   return (
-    <Wrapper>
+    <div>
       <header>
         <Headers />
       </header>
@@ -19,7 +18,7 @@ export default function Layout(props) {
       <footer>
         <Footer />
       </footer>
-    </Wrapper>
+    </div>
   );
 }
 

@@ -68,7 +68,7 @@ export default function OurCareer() {
                 </p>
               </div>
               <div className="pt-6">
-                <Link href="/" className="w-1/3 bg-[#B1B2FF] hover:bg-[#9798f8] p-2 rounded-full shadow-lg">
+                <Link href="/careers" prefetch={false} className="w-1/3 bg-[#B1B2FF] hover:bg-[#9798f8] p-2 rounded-full shadow-lg">
                   <Button
                     type="button"
                     className="w-1/3 text-white "

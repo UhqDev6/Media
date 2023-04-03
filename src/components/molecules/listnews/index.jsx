@@ -59,7 +59,7 @@ export default function ListNews(props) {
                       </div>
                     </Card.Title>
                     <Card.Title className="font-extralight tracking-wide leading-relaxed text-sm pt-4 pb-4 pl-4 pr-4 hover:underline hover:text-gray-700 cursor-pointer">
-                      <Link href={`/news/blog/${blog.id}/${blog.slug}`} prefetch={false}>
+                      <Link href={`/news/blog/${blog.id}/${blog.slug}`}>
                         {
                           blog.title
                         }

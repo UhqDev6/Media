@@ -20,7 +20,7 @@ export default function OurNews(props) {
       <div className="p-5">
         <ListNews data={data} />
         <div className="w-full flex justify-center mt-10">
-          <Link href="/news" prefetch={false} className="w-1/2 md:w-1/5 bg-[#B1B2FF] hover:bg-[#9798f8] p-3 rounded-full shadow-lg">
+          <Link href="/news" className="w-1/2 md:w-1/5 bg-[#B1B2FF] hover:bg-[#9798f8] p-3 rounded-full shadow-lg">
             <Button
               type="button"
               className="text-white flex mx-auto"

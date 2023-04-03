@@ -11,7 +11,7 @@ export default function MobileNavbar() {
         <ul className="text-center flex-none pt-16">
           {
             navLink.map(({ link, name }) => (
-              <Link key={`${name}-mobileNavbar`} href={link} prefetch={false}>
+              <Link key={`${name}-mobileNavbar`} href={link}>
                 <li className={`${router.pathname === link ? 'border-b-2 border-[#D2DAFF] p-4' : 'border-b-[1px] border-gray-100 p-4'}`}>
                   {name}
                 </li>

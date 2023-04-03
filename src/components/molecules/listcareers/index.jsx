@@ -34,7 +34,7 @@ export default function ListCareer(props) {
                   <div className="w-full text-gray-500 font-light tracking-wide leading-relaxed text-sm pt-6 pl-6 pr-6">
                     {
                         parse(`${smartSubstr(career.description, 70)}...`)
-                      }
+                    }
                   </div>
                   <Button
                     type="button"

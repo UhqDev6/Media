@@ -30,11 +30,6 @@ export default function Blog(props) {
   async function loadNewsData() {
     const response = await fetch(`https://idnapi.jvalleyserver.net/api/blog_read?limit=${startNews}`);
     const responseJson = await response.json();
-    const { status, message } = responseJson;
-
-    if (status !== true) {
-      console.log(message);
-    }
 
     const {
       query: { rows },
@@ -47,11 +42,6 @@ export default function Blog(props) {
   async function loadPressReleaseData() {
     const response = await fetch(`https://idnapi.jvalleyserver.net/api/pr_read?limit=${startPressRelease}`);
     const responseJson = await response.json();
-    const { status, message } = responseJson;
-
-    if (status !== true) {
-      console.log(message);
-    }
 
     const {
       query: { rows },
@@ -112,7 +102,7 @@ export default function Blog(props) {
           <Button
             type="button"
             onClick={() => handleAction()}
-            className={`${active === true ? 'bg-[#B1B2FF] p-2 rounded-lg' : 'p-2'}`}
+            className={`${active === true ? 'bg-[#B1B2FF] p-2 rounded-lg text-white' : 'p-2'}`}
           >
             Blog
           </Button>
@@ -121,7 +111,7 @@ export default function Blog(props) {
           <Button
             type="button"
             onClick={() => handleAction()}
-            className={`${active === false ? 'bg-[#B1B2FF] p-2 rounded-lg' : 'p-2'}`}
+            className={`${active === false ? 'bg-[#B1B2FF] p-2 rounded-lg text-white' : 'p-2'}`}
           >
             Press Release
           </Button>

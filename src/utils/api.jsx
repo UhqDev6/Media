@@ -10,11 +10,6 @@ const api = (() => {
     });
 
     const responseJson = await response.json();
-    const { status, message } = responseJson;
-
-    if (status !== true) {
-      console.log(message);
-    }
 
     const {
       query: { rows },
@@ -41,11 +36,6 @@ const api = (() => {
       },
     });
     const responseJson = await response.json();
-    const { status, message } = responseJson;
-
-    if (status !== true) {
-      console.log(message);
-    }
 
     const {
       query: { rows },

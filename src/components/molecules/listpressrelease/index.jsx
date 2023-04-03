@@ -3,6 +3,7 @@ import Moment from 'react-moment';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { configHost } from '@/constants/host';
 import Card from '../card';
 import CardSkeleton from '@/components/atoms/CardSkeleton';
@@ -58,7 +59,11 @@ export default function ListPressRelease(props) {
                       </div>
                     </Card.Title>
                     <Card.Title className="font-extralight tracking-wide leading-relaxed text-sm pt-4 pb-4 pl-4 pr-4 hover:underline hover:text-gray-700 cursor-pointer">
-                      { blog?.title }
+                      <Link href={`/news/press-release/${blog.id}/${blog.slug}`}>
+                        {
+                          blog.title
+                        }
+                      </Link>
                     </Card.Title>
                   </Card.Body>
                   <Card.Footer className="w-full h-1 mt-auto bg-gradient-to-br from-[#B1B2FF] to-fuchsia-300 rounded-b-xl" />

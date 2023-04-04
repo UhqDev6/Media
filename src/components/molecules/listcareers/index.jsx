@@ -1,11 +1,14 @@
 import parse from 'html-react-parser';
 import { FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import Moment from 'react-moment';
+import { useEffect, useState } from 'react';
 import Button from '@/components/atoms/button';
 import Card from '../card';
 import { configHost } from '@/constants/host';
+import SpinnerLoading from '@/components/atoms/SpinnerLoading';
 
 export default function ListCareer(props) {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     careers,
   } = props;
@@ -18,11 +21,19 @@ export default function ListCareer(props) {
     return temp;
   };
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
     <div>
-      <div className="flex w-full mx-auto justify-center">
-        <div className="flex flex-wrap md:gap-5 justify-center pl-10 pr-10">
-          {
+      {
+        isLoading ? (
+          <SpinnerLoading />
+        ) : (
+          <div className="flex w-full mx-auto justify-center">
+            <div className="flex flex-wrap md:gap-5 justify-center pl-10 pr-10">
+              {
             careers.map((career) => (
               <Card key={`${career?.id}`} className="grid md:w-[300px] w-full  h-auto shadow-lg mt-10 relative">
                 <Card.Title>
@@ -75,8 +86,10 @@ export default function ListCareer(props) {
               </Card>
             ))
           }
-        </div>
-      </div>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 }

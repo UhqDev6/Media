@@ -54,22 +54,22 @@ export default function BlogDetail(props) {
   );
 }
 
-// export async function getStaticPaths() {
-//   const res = await fetch('https://idnapi.jvalleyserver.net/api/blog_read');
-//   const data = await res.json();
-//   const paths = data.query.rows.map((dt) => ({
-//     params: {
-//       id: `${dt.id}`,
-//       slug: dt.slug,
-//     },
-//   }));
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
+export async function getStaticPaths() {
+  const res = await fetch('https://idnapi.jvalleyserver.net/api/blog_read');
+  const data = await res.json();
+  const paths = data.query.rows.map((dt) => ({
+    params: {
+      id: `${dt.id}`,
+      slug: dt.slug,
+    },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+}
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const { id, slug } = params;
   // eslint-disable-next-line radix
   const intId = parseInt(id);

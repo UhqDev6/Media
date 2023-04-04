@@ -45,7 +45,7 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const dataNews = await api.getNews();
   const dataPressRelease = await api.getPressRelease();
   const culture = getCulture();

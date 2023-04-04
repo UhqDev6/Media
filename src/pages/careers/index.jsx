@@ -182,7 +182,7 @@ export default function Career(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const careers = await api.getCareer();
   const {
     jobs,

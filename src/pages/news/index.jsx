@@ -11,7 +11,6 @@ import api from '@/utils/api';
 import ListNews from '@/components/molecules/listnews';
 import Button from '@/components/atoms/button';
 import ListPressRelease from '@/components/molecules/listpressrelease';
-import SpinnerLoading from '@/components/atoms/SpinnerLoading';
 
 export default function Blog(props) {
   const {
@@ -23,7 +22,6 @@ export default function Blog(props) {
   const [startPressRelease, setStartPressRelease] = useState(8);
   const [pressRelease, setPressRelease] = useState(dataPressRelease);
   const [active, setActive] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleAction = () => {
     setActive(!active);
@@ -56,7 +54,6 @@ export default function Blog(props) {
   useEffect(() => {
     loadNewsData();
     loadPressReleaseData();
-    setIsLoading(false);
   }, []);
 
   // const dispatch = useDispatch();
@@ -78,54 +75,49 @@ export default function Blog(props) {
           News
         </title>
       </Head>
+      <div className="relative w-full h-[500px] bg-gradient-to-tr from-black to-[#B1B2FF]">
+        <Image
+          src={bgNews}
+          alt="bg-news"
+          width={1440}
+          height={500}
+          object-fit="cover"
+          placeholder="blur"
+          overflow="hidden"
+          className="w-full h-[500px] object-cover absolute mix-blend-overlay"
+          priority
+        />
+        <div className="text-4xl md:text-7xl font-bold shadow-xl text-white relative flex justify-center">
+          <div className="absolute mt-[250px] pl-8 pr-8 md:text-center">
+            <h1>News</h1>
+            <p className="font-extralight tracking-wide leading-relaxed text-sm mt-2">
+              Share the same vision with IDN Media? Let’s work together to
+              democratize information for every Indonesian.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-center gap-6 mt-10">
+        <div>
+          <Button
+            type="button"
+            onClick={() => handleAction()}
+            className={`${active === true ? 'bg-[#B1B2FF] p-2 rounded-lg text-white' : 'p-2'}`}
+          >
+            Blog
+          </Button>
+        </div>
+        <div>
+          <Button
+            type="button"
+            onClick={() => handleAction()}
+            className={`${active === false ? 'bg-[#B1B2FF] p-2 rounded-lg text-white' : 'p-2'}`}
+          >
+            Press Release
+          </Button>
+        </div>
+      </div>
       {
-        isLoading ? (
-          <SpinnerLoading />
-        ) : (
-          <>
-            <div className="relative w-full h-[500px] bg-gradient-to-tr from-black to-[#B1B2FF]">
-              <Image
-                src={bgNews}
-                alt="bg-news"
-                width={1440}
-                height={500}
-                object-fit="cover"
-                placeholder="blur"
-                overflow="hidden"
-                className="w-full h-[500px] object-cover absolute mix-blend-overlay"
-                priority
-              />
-              <div className="text-4xl md:text-7xl font-bold shadow-xl text-white relative flex justify-center">
-                <div className="absolute mt-[250px] pl-8 pr-8 md:text-center">
-                  <h1>News</h1>
-                  <p className="font-extralight tracking-wide leading-relaxed text-sm mt-2">
-                    Share the same vision with IDN Media? Let’s work together to
-                    democratize information for every Indonesian.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="flex justify-center gap-6 mt-10">
-              <div>
-                <Button
-                  type="button"
-                  onClick={() => handleAction()}
-                  className={`${active === true ? 'bg-[#B1B2FF] p-2 rounded-lg text-white' : 'p-2'}`}
-                >
-                  Blog
-                </Button>
-              </div>
-              <div>
-                <Button
-                  type="button"
-                  onClick={() => handleAction()}
-                  className={`${active === false ? 'bg-[#B1B2FF] p-2 rounded-lg text-white' : 'p-2'}`}
-                >
-                  Press Release
-                </Button>
-              </div>
-            </div>
-            {
         active ? (
           <>
             <div>
@@ -162,14 +154,11 @@ export default function Blog(props) {
           </>
         )
       }
-          </>
-        )
-      }
     </Layout>
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // const queryClient = new QueryClient();
   // await queryClient.prefetchQuery(['query'], api.getNews);
   // return {
